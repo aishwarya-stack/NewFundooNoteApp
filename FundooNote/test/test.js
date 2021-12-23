@@ -1,6 +1,6 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
-const server = require("../fundoonoteapp/server");
+const server = require("../server");
 chai.use(chaiHttp);
 chai.should();
 const user=require("./user.test.json")
@@ -138,6 +138,7 @@ describe("Login", () => {
       /**
        * it function for login when user login With Wrong Email.
        * */
+      
       it( "givenLoginDetails_whenWrongEmail", (done) => {
         const loginDetails = user.user.loginWithWrongEmail
         chai
@@ -152,4 +153,21 @@ describe("Login", () => {
             done();
           });
       });
-    }); 
+    });
+     
+    describe("Forgot Password API", () => {
+      it.only(" when call Forgot password api,should return response status success", (done) => {
+        chai
+          .request(server)
+          .post("/forgotPassword")
+          .send({})
+          .end((err, res) => {
+            if (err) {
+              console.log("plz check your credential");
+              return done();
+            }
+            res.should.have.status(200);
+            return done();
+          });
+      });
+    });
