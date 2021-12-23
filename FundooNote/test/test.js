@@ -160,14 +160,30 @@ describe("Login", () => {
         chai
           .request(server)
           .post("/forgotPassword")
-          .send({})
+         .send({ email: "aishwaryaashokkadam@gmail.com" })
           .end((err, res) => {
-            if (err) {
-              console.log("plz check your credential");
-              return done();
-            }
-            res.should.have.status(200);
-            return done();
-          });
+          if (err) {
+          console.log("plz check your credential");
+          return done();
+        }
+        res.should.have.status(200);
+        return done();
       });
-    });
+  });
+
+  it.only(" should validate the input , return appropriate response", (done) => {
+    chai
+      .request(server)
+      .post("/forgotPassword")
+      .send({ email: "aishwaryaashokkadam@gmail.com" })
+      .end((err, res) => {
+        if (err) {
+          console.log("plz check your credential");
+          return done();
+        }
+        res.should.have.status(200);
+        return done();
+      });
+  });
+});
+      

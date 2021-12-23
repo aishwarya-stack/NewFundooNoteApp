@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-
+const bcrypt = require("bcrypt");
 exports.generateToken = (data)=>{
 	const Token = {
 		firstName: data.firstName,

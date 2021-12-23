@@ -1,5 +1,5 @@
 const UserService = require("..//service/user.service");
-const { authUserRegister, authUserLogin } = require("..//utility/user.validation");
+const { authUserRegister, authUserLogin, validForgotPassword } = require("..//utility/user.validation");
 const { genSaltSync, hashSync } = require("bcrypt");
 
 class UserDataController {
@@ -107,11 +107,26 @@ class UserDataController {
 	 * @returns
 	 */
 	forgotPassword = (req, res) => {
-		return res.status(200).send({
-			success: true,
-			message: "Email sent successfully"
-		});
-	}
-}
+		
+		const user = {
+			email: req.body.email
+		
+		  };
+		  const emailValidation = validForgotPassword.validate(user);
+		  //console.log(resetValidation.error);
+		  if (emailValidation.error) {
+			res.status(400).send({
+				success: false,
+				message: "check inserted fields",
+			});
+		  } else {
+			return res.status(200).send({
+			  success: true,
+			  message: "Email sent successfully",
+			});
+		  }
+		};
+	  }
+	
 
 module.exports = new UserDataController(); 
