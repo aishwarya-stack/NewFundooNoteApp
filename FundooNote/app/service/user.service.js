@@ -43,8 +43,14 @@ class UserService {
 	};
 	
 	forgotPassword = (email, callback) => {
-		callback(null, email);
-	  };	
+		UserModel.forgotPassword(email, (error, data) => {
+		  if (error) {
+			return callback(error, null);
+		  } else {
+			return callback(null, data);
+		  }
+		});
+	  };
 	}
 
 

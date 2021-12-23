@@ -199,5 +199,20 @@ describe("Login", () => {
         return done();
       });
   });
+  
+  it.only(" Should return true from ForgotPassword model, return appropriate response", (done) => {
+    chai
+      .request(server)
+      .post("/forgotPassword")
+      .send({ email: "aishwaryaashokkadam@gmail.com" })
+      .end((err, res) => {
+        if (err) {
+          console.log("plz check your credential");
+          return done();
+        }
+        res.should.have.status(200);
+        return done();
+      });
+  });
 });
       
