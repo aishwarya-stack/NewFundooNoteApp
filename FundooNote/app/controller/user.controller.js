@@ -112,21 +112,44 @@ class UserDataController {
 			email: req.body.email
 		
 		  };
-		  const emailValidation = validForgotPassword.validate(user);
-		  //console.log(resetValidation.error);
-		  if (emailValidation.error) {
-			res.status(400).send({
+		  try {
+			const userForgotPasswordInfo = {
+			  email: req.body.email
+			};
+			const forgotValidation = validForgotPassword.validate(userForgotPasswordInfo);
+			console.log(forgotValidation.error);
+			if (forgotValidation.error) {
+			  res.status(400).send({
 				success: false,
-				message: "check inserted fields",
+				message: forgotValidation.error.message
+			  });
+			}
+			UserService.forgotPassword(userForgotPasswordInfo, (error, result) => {
+			  if (error) {
+				return res.status(400).send({
+				  success: false,
+				  message: "failed to send email",
+				});
+			  } else {
+				return res.status(200).send({
+				  success: true,
+				  message: "Email sent successfully",
 			});
-		  } else {
-			return res.status(200).send({
-			  success: true,
-			  message: "Email sent successfully",
+		  } 
+		});
+	}
+		  catch (error) {
+			console.log("Error", error);
+			return res.status(500).send({
+			  success: false,
+			  message: "Internal server error",
+			  result: null
 			});
 		  }
-		};
-	  }
+		  };
+		}
+	  
+
 	
 
 module.exports = new UserDataController(); 

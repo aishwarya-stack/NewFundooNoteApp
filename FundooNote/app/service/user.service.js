@@ -41,5 +41,11 @@ class UserService {
 			}
 		});
 	};
-}
+	
+	forgotPassword = (email, callback) => {
+		callback(null, email);
+	  };	
+	}
+
+
 module.exports = new UserService(); 
