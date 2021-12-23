@@ -1,17 +1,17 @@
 const UserService = require("..//service/user.service");
-const {authUserRegister,authUserLogin} = require("..//utility/user.validation");
-const {genSaltSync,hashSync} = require("bcrypt");
+const { authUserRegister, authUserLogin } = require("..//utility/user.validation");
+const { genSaltSync, hashSync } = require("bcrypt");
 
 class UserDataController {
 	/**
-     * @description : Function created to add user into database
-     * @param {*} req
-     * @param {*} res
-     * @returns
-     */
+	 * @description : Function created to add user into database
+	 * @param {*} req
+	 * @param {*} res
+	 * @returns
+	 */
 	create = (req, res) => {
 		console.log("inside controller", req.body);
-		try{
+		try {
 			const userData = {
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
@@ -19,10 +19,10 @@ class UserDataController {
 				password: req.body.password,
 			};
 			const Salt = genSaltSync(10);
-			userData.password = hashSync(req.body.password,Salt);
+			userData.password = hashSync(req.body.password, Salt);
 			console.log(userData.password);
 			const registerValidation = authUserRegister.validate(userData);
-			if(registerValidation.error) {
+			if (registerValidation.error) {
 				res.status(400).send({
 					success: false,
 					message: "Enter valid fields",
@@ -30,24 +30,24 @@ class UserDataController {
 				});
 				return;
 			}
-			console.log("incontroller1",registerValidation);
+			console.log("incontroller1", registerValidation);
 			UserService.registerUser(userData, (err, data) => {
 				if (err) {
 					return res.status(201).json({
 						success: false,
 						message: "User allready exist"
 					});
-        
+
 				} else {
 					res.status(200).json({
 						success: true,
 						message: "user successfully registered",
 						data: data,
 					});
-           
+
 				}
 			});
-		}catch (err) {
+		} catch (err) {
 			console.log(err);
 			return res.status(500).json({
 				success: false,
@@ -57,11 +57,11 @@ class UserDataController {
 		}
 	};
 	/**
-     * @description: Function created to verify user login info
-     * @param {*} req
-     * @param {*} res
-     */
-	login = (req, res) =>  {
+	 * @description: Function created to verify user login info
+	 * @param {*} req
+	 * @param {*} res
+	 */
+	login = (req, res) => {
 		console.log("inside controller", req.body);
 		try {
 			const loginData = {
@@ -69,7 +69,7 @@ class UserDataController {
 				password: req.body.password,
 			};
 			const loginValidation = authUserLogin.validate(loginData);
-			if (loginValidation.error){
+			if (loginValidation.error) {
 				res.status(400).send({
 					success: false,
 					message: "check inserted fields",
@@ -99,5 +99,19 @@ class UserDataController {
 			});
 		}
 	};
+
+	/**
+	 * @description : forgot password
+	 * @param {*} req
+	 * @param {*} res
+	 * @returns
+	 */
+	forgotPassword = (req, res) => {
+		return res.status(200).send({
+			success: true,
+			message: "Email sent successfully"
+		});
+	}
 }
+
 module.exports = new UserDataController(); 
