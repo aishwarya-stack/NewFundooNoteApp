@@ -235,6 +235,23 @@ describe("Login", () => {
             res.should.have.status(200);
             return done();
           });
+        });   
+    
+    it.only("should validate the input , return appropriate response", (done) => {
+      chai
+      .request(server)
+      .post("/resetpassword")
+      .send({"email": "aishwaryaashokkadam@gmail.com",
+      "password": "Aishwarya@123",
+      "code": "0cfcuxlnbnnb"})
+      .end((err, res) => {
+        if (err) {
+          console.log("plz check your credential");
+          return done();
+        }
+        res.should.have.status(200);
+        return done();
       });
-    });
-   
+  });
+});    
+  
