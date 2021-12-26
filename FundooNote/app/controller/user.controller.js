@@ -1,5 +1,5 @@
 const UserService = require("..//service/user.service");
-const { authUserRegister, authUserLogin, validForgotPassword, authUserforgot } = require("..//utility/user.validation");
+const { authUserRegister, authUserLogin, validForgotPassword, authUserforgot,validateReset,validResetPassword } = require("..//utility/user.validation");
 const { genSaltSync, hashSync } = require("bcrypt");
 
 class UserDataController {
@@ -151,14 +151,36 @@ class UserDataController {
 		  }
 		};   
 	  
-	  resetPassword = (req, res) => {
-		return res.status(200).send({
-		  success: true,
-		  message: "Email sent successfully"
-		});
-	  }
-	  
-}
+		resetPassword = (req, res) => {
+			try {
+				const userResetPasswordInfo = {
+					email: req.body.email,
+					password: req.body.password,
+					code: req.body.code
+				  };
+				  const resetValidation = validResetPassword.validate(userResetPasswordInfo);
+				  console.log(resetValidation.error);
+				  if (resetValidation.error) {
+					res.status(400).send({
+					  success: false,
+					  message: resetValidation.error.message
+					});
+				  } else {
+					return res.status(200).send({
+					  success: true,
+					  message: "Email sent successfully"
+					});
+				  }
+				} catch (error) {
+				  console.log("Error", error);
+				  return res.status(500).send({
+					success: false,
+					message: "Internal server error",
+					result: null
+				  });
+				};
+			  }
+			}
 	  module.exports = new UserDataController();
 	
 

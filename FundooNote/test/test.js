@@ -224,7 +224,9 @@ describe("Login", () => {
         chai
           .request(server)
           .post("/resetpassword")
-          .send({})
+          .send({"email": "rohitg213@gmail.com",
+          "password": "clickN70@",
+          "code": "4rhghgtW@"})
           .end((err, res) => {
             if (err) {
               console.log("plz check your credential");
