@@ -253,5 +253,21 @@ describe("Login", () => {
         return done();
       });
   });
-});    
+  it.only("should validate the wrong input of password, return appropriate response", (done) => {
+    chai
+      .request(server)
+      .patch("/resetPassword")
+      .send({ "email": "aishwaryaashokkadam@gmail.com",
+      "password": "Aishwarya",
+      "code": "0cfcuxlnbnnb" })
+      .end((err, res) => {
+        if (err) {
+          console.log("plz check your credential");
+          return done();
+        }
+        res.should.have.status(404);
+        return done();
+      });
+  });
+});   
   
