@@ -285,5 +285,21 @@ describe("Login", () => {
         return done();
       });
   });
+  it.only("when call reset password api, should return appropriate response from reset service", (done) => {
+    chai
+      .request(server)
+      .post("/resetpassword")
+      .send({"email": "aishwaryaashokkadam@gmail.com",
+      "password": "Aishwarya@123",
+      "code": "0cfcuxlnbnnb"})
+      .end((err, res) => {
+        if (err) {
+          console.log("plz check your credential");
+          return done();
+        }
+        res.should.have.status(200);
+        return done();
+      });
+  });
 }); 
   
