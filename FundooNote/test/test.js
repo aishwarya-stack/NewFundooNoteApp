@@ -218,3 +218,21 @@ describe("Login", () => {
   });
     });
 
+    // Test cases for RESET Password API
+    describe("Forgot Password API", () => {
+      it.only(" when call Forgot password api,should return response status success", (done) => {
+        chai
+          .request(server)
+          .post("/resetpassword")
+          .send({})
+          .end((err, res) => {
+            if (err) {
+              console.log("plz check your credential");
+              return done();
+            }
+            res.should.have.status(200);
+            return done();
+          });
+      });
+    });
+   
