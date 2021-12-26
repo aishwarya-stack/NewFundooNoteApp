@@ -56,7 +56,15 @@ class UserService {
 	  });
 	}
 	resetPassword = (resetInfo, callback) => {
-		callback(null, resetInfo);
+		UserModel.resetPassword(resetInfo, (err, data) => {
+			if (err) {
+			  callback(err, null);
+			} else if (!data) {
+			  callback("Code not found", null);
+			} else {
+			  callback(null, data);
+			}
+		  });
 	  };
 	}
 	

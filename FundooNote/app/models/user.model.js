@@ -64,5 +64,8 @@ class UserModel {
 	  return callback("Internal Error", null);
 	}
   }
+  resetPassword = (data, callback) => {
+    callback(null, data);
+  };
 }
 module.exports = new UserModel(); 
