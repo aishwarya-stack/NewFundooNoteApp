@@ -156,51 +156,53 @@ describe("Login", () => {
     });
      
     describe("Forgot Password API", () => {
-      it.only(" when call Forgot password api,should return response status success", (done) => {
-        chai
-          .request(server)
+      it(" when call Forgot password api,should return response status success", (done) => {
+        const forgotPasswordDetails = user.user.userForgotPassword;
+        chai.request(server)
           .post("/forgotPassword")
-         .send({ email: "aishwaryaashokkadam@gmail.com" })
-          .end((err, res) => {
-          if (err) {
-          console.log("plz check your credential");
-          return done();
-        }
-        res.should.have.status(200);
-        return done();
+          .send({ email: "aishwaryaashokkadam@gmail.com" })
+          .end((error, res) => {
+            if (error) {
+              return done("Invalid details received instead of valid");
+            }
+            res.should.have.status(201);
+            return done();
+          });
       });
-  });
 
-  it.only(" should validate the input , return appropriate response", (done) => {
+  it(" should validate the input , return appropriate response", (done) => {
+    const forgotPasswordDetails = user.user.userForgotPassword;
     chai
       .request(server)
       .post("/forgotPassword")
-      .send({ email: "aishwaryaashokkadam@gmail.com" })
+      .send({ email: "aishwaryaashokkadam@gmail.com" } )
       .end((err, res) => {
         if (err) {
           console.log("plz check your credential");
           return done();
         }
-        res.should.have.status(200);
+        res.should.have.status(201);
         return done();
       });
   });
-  it.only(" Should return true from ForgotPassword service, return appropriate response", (done) => {
+  it(" Should return true from ForgotPassword service, return appropriate response", (done) => {
+    const forgotPasswordDetails = user.user.userForgotPassword;
     chai
       .request(server)
       .post("/forgotPassword")
-      .send({ email: "aishwaryaashokkadam@gmail.com" })
+      .send({ email: "aishwaryaashokkadam@gmail.com" } )
       .end((err, res) => {
         if (err) {
-          console.log("plz check your credential");
+          console.log("plz check your credential"+err);
           return done();
         }
-        res.should.have.status(200);
+        res.should.have.status(201);
         return done();
       });
   });
   
-  it.only(" Should return true from ForgotPassword model, return appropriate response", (done) => {
+  it(" Should return true from ForgotPassword model, return appropriate response", (done) => {
+    const forgotPasswordDetails = user.user.userForgotPassword;
     chai
       .request(server)
       .post("/forgotPassword")
@@ -210,9 +212,9 @@ describe("Login", () => {
           console.log("plz check your credential");
           return done();
         }
-        res.should.have.status(200);
+        res.should.have.status(201);
         return done();
       });
   });
-});
-      
+    });
+

@@ -6,5 +6,5 @@ module.exports = (app) => {
    
 	app.post("/register", UserDataController.create);
 	app.post("/login", UserDataController.login);
-	app.post("/forgotPassword", UserDataController.forgotPassword);
+	app.post("/forgotpassword", UserDataController.forgotPassword);
 };

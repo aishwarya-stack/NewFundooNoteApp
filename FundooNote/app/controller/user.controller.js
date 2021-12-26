@@ -1,5 +1,5 @@
 const UserService = require("..//service/user.service");
-const { authUserRegister, authUserLogin, validForgotPassword } = require("..//utility/user.validation");
+const { authUserRegister, authUserLogin, validForgotPassword, authUserforgot } = require("..//utility/user.validation");
 const { genSaltSync, hashSync } = require("bcrypt");
 
 class UserDataController {
@@ -106,50 +106,51 @@ class UserDataController {
 	 * @param {*} res
 	 * @returns
 	 */
-	forgotPassword = (req, res) => {
-		
-		const user = {
+	
+	 forgotPassword = (req, res) => {
+		console.log("inside controller");
+		console.log(req.body);
+		try {
+		  const user = {
 			email: req.body.email
-		
 		  };
-		  try {
-			const userForgotPasswordInfo = {
-			  email: req.body.email
-			};
-			const forgotValidation = validForgotPassword.validate(userForgotPasswordInfo);
-			console.log(forgotValidation.error);
-			if (forgotValidation.error) {
-			  res.status(400).send({
-				success: false,
-				message: forgotValidation.error.message
-			  });
-			}
-			UserService.forgotPassword(userForgotPasswordInfo, (error, result) => {
-			  if (error) {
-				return res.status(400).send({
-				  success: false,
-				  message: "failed to send email",
-				});
-			  } else {
-				return res.status(200).send({
-				  success: true,
-				  message: "Email sent successfully",
-			});
-		  } 
-		});
-	}
-		  catch (error) {
-			console.log("Error", error);
-			return res.status(500).send({
+		  const emailValidation = authUserforgot.validate(user);
+		  if (emailValidation.error) {
+			res.status(400).send({
 			  success: false,
-			  message: "Internal server error",
-			  result: null
+			  message: "check inserted fields",
+			  data: emailValidation
 			});
+			return;
 		  }
-		  };
-		}
+		  UserService.forgotPassword(user, (error, data) => {
+			if (error) {
+				console.log("email id is not exist");
+				  return res.status(409).json({
+					success: false,
+					message: "email id is not exist"
+				  });
+				} else {
+				  console.log("email send Successfully");
+				  res.status(201).json({
+					success: true,
+					data: data,
+					message: "email send successfully"
 	  
-
+				  });
+				}
+					});
+	
+			} catch (error) {
+			  console.log("server-error",error);
+			  return res.status(500).json({
+				success: false,
+				data: null,
+				message: "server-error"
+			 });
+		  }
+		};   
+	  }
+	  module.exports = new UserDataController();
 	
 
-module.exports = new UserDataController(); 

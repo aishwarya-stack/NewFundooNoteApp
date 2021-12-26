@@ -1,7 +1,8 @@
 //import express library
+require('dotenv').config()
 const express = require("express");
 
-require("dotenv").config;
+//require("dotenv").config;
 
 //create app
 const app = express();

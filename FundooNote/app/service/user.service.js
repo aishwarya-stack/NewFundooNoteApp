@@ -1,6 +1,7 @@
 const UserModel = require("../models/user.model");
 const auth = require("..//utility/user.authenticate");
 const  bcrypt  = require("bcrypt");
+const nodemailer = require("../utility/user.nodemailer");
 class UserService {
 	/**
      * @description: Function sends new user info to model
@@ -24,33 +25,36 @@ class UserService {
      * @param {*} loginData
      * @param {*} authenticateUser
      */
-	loginUser = (loginData, authenticateUser) => {
-		UserModel.loginUser(loginData,async (err, data) => {
-			if (err) {
-				return authenticateUser(err, null);
+	 loginUser = (loginData, authenticateUser) => {
+		// call model layer
+		UserModel.loginUser(loginData, (err, data) => {
+		  if (err) {
+			console.log("Error found in service");
+			return authenticateUser(err, null);
+		  } else {
+			const result = bcrypt.compareSync(loginData.password, data.password);
+			if (result) {
+			  const token = auth.jwtTokenGenerate(data);
+			  console.log("Valid Password");
+			  return authenticateUser(null, token);
+			} else {
+			  console.log("Password does not match");
+			  return authenticateUser("Password does not match", null);
 			}
-			else {
-				const result = await bcrypt.compare(loginData.password, data.password);
-				console.log(result);
-				if(result) {
-					const token = auth.generateToken(data);
-					return authenticateUser(null,token);
-				} else {
-					return authenticateUser("Password does not match", null);
-				}
-			}
+		  };
 		});
-	};
+	  }
 	
 	forgotPassword = (email, callback) => {
-		UserModel.forgotPassword(email, (error, data) => {
-		  if (error) {
-			return callback(error, null);
-		  } else {
-			return callback(null, data);
-		  }
-		});
-	  };
+		console.log("inservice",email);
+		UserModel.forgotPassword(email, (err, data) => {
+			if (err) {
+				return callback(err, null);
+			  } else{
+				return callback(null, nodemailer.sendEmail(data));
+			  }
+	  });
+	}
 	}
 
 

@@ -16,8 +16,11 @@ const authUserLogin = Joi.object({
 
   const validForgotPassword =
     Joi.object({
-      email: Joi.string().required().pattern(new RegExp("^^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"))
+      email: Joi.string().required(),
 
     });
-module.exports = {authUserRegister,authUserLogin,validForgotPassword};
+	const authUserforgot = Joi.object({
+		email: Joi.string().email().required()
+	  });
+module.exports = {authUserRegister,authUserLogin,validForgotPassword,authUserforgot};
 

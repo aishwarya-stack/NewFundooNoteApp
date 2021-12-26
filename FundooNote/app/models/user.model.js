@@ -42,31 +42,27 @@ class UserModel {
 		});
 	}; 
 
-loginUser = (loginData, authenticateUser) => {
-		console.log("inside model");
-		const query = [loginData.email];
-		pool.query(queries.loginUser,query,(err, data) => {
-			if (!data) {
-				return authenticateUser("Invalid User", null);
-			}
-			if (data.rows.length===0) {
-				return authenticateUser("invalid User",null);
-			}
-			if (data){
-				console.log(data.rows[0]);
-				return authenticateUser(null, data.rows[0]);
-			}
-		});
-	};
+
  
 /**
      * @description:checks if emailId is present inside database
      * @param {*} email
      * @param {*} callback
      */
- forgotPassword = (data, callback) => {
-	
-	callback(null, data);
- };
+ forgotPassword = (userDetails, callback) => {
+	try {
+	  const query = [userDetails.email];
+	  pool.query(queries.loginUser,query, (err, data) => {
+		if (err || !data) {
+		  return callback(err + "invalid email", null);
+		} else {
+		  return callback(null, data);
+		}
+	  });
+	} catch (error) {
+	  logger.error("Internal Error");
+	  return callback("Internal Error", null);
+	}
+  }
 }
 module.exports = new UserModel(); 
