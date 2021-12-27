@@ -83,7 +83,7 @@ class UserModel {
             throw err;
           } else {
             const values = [hashedPassword,process.env.EMAIL]
-            console.log("bcrypt pw"+ values);
+            console.log("bcrypt pw "+ values);
             pool.query(queries.updateUser,values, (error, data) => {
               if (data) {
                 logger.info("Password Updated successfully");

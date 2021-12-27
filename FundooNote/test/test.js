@@ -237,7 +237,7 @@ describe("Login", () => {
           });
         });   
     
-    it.only("should validate the input , return appropriate response", (done) => {
+    it("should validate the input , return appropriate response", (done) => {
       chai
       .request(server)
       .post("/resetpassword")
@@ -253,7 +253,7 @@ describe("Login", () => {
         return done();
       });
   });
-  it.only("should validate the wrong input of password, return appropriate response", (done) => {
+  it("should validate the wrong input of password, return appropriate response", (done) => {
     chai
       .request(server)
       .post("/resetpassword")
@@ -269,7 +269,7 @@ describe("Login", () => {
         return done();
       });
   });
-  it.only("should validate the wrong input of email, return appropriate response", (done) => {
+  it("should validate the wrong input of email, return appropriate response", (done) => {
     chai
       .request(server)
       .post("/resetpassword")
@@ -285,7 +285,7 @@ describe("Login", () => {
         return done();
       });
   });
-  it.only("when call reset password api, should return appropriate response from reset service", (done) => {
+  it("when call reset password api, should return appropriate response from reset service", (done) => {
     chai
       .request(server)
       .post("/resetpassword")
@@ -301,7 +301,7 @@ describe("Login", () => {
         return done();
       });
   });
-  it.only("when call reset password api, should return appropriate response from resetPassword model", (done) => {
+  it("when call reset password api, should return appropriate response from resetPassword model", (done) => {
     chai
       .request(server)
       .post("/resetpassword")

@@ -18,8 +18,8 @@ class UserDataController {
 				email: req.body.email,
 				password: req.body.password,
 			};
-			const Salt = genSaltSync(10);
-			userData.password = hashSync(req.body.password, Salt);
+			//const Salt = genSaltSync(10);
+			//userData.password = hashSync(req.body.password, Salt);
 			//console.log(userData.password);
 			const registerValidation = authUserRegister.validate(userData);
 			if (registerValidation.error) {
@@ -163,7 +163,7 @@ class UserDataController {
 	 console.log("inside controller");
 	try {
 	  const resetInfo = {
-		token:req.body.token,
+		token:req.body.random_string,
 		newPassword: req.body.password
 	  };
 	  

@@ -25,7 +25,7 @@ exports.sendEmail = (data,callback) => {
     subject: "Reset password Link",
     html: `<h2>please click on this link to change the password</h2>
                
-                <p>${process.env.CLIENT_URL}/resetpassword/${code}</p>
+                <p>/resetpassword/${code}</p>
                 `
   };
   

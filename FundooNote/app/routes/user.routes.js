@@ -1,5 +1,6 @@
 //import controller
 const UserDataController = require("../controller/user.controller")
+const noteController = require("../controller/note.controller");
 const Helper = require("..//utility/user.authenticate");
 
 module.exports = (app) => {
@@ -12,5 +13,6 @@ module.exports = (app) => {
      // reset user password
     
     app.post("/resetpassword",  UserDataController.resetPassword);
+    app.post("/createnote", noteController.createNote);
    
 };
