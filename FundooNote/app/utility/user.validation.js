@@ -42,6 +42,12 @@ const authUserLogin = Joi.object({
 		  )
 		  .required()
 	  });
+	  const validateNote = Joi.object({
+		title: Joi.string()
+		  .required(),
+		  description: Joi.string()
+		  .required()
+	  });
 
-module.exports = {authUserRegister,authUserLogin,validForgotPassword,authUserforgot,validateReset,resetSchema};
+module.exports = {authUserRegister,authUserLogin,validForgotPassword,authUserforgot,validateReset,resetSchema,validateNote};
 

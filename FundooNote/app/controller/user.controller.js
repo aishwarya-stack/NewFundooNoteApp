@@ -18,9 +18,9 @@ class UserDataController {
 				email: req.body.email,
 				password: req.body.password,
 			};
-			//const Salt = genSaltSync(10);
-			//userData.password = hashSync(req.body.password, Salt);
-			//console.log(userData.password);
+			const Salt = genSaltSync(10);
+			userData.password = hashSync(req.body.password, Salt);
+			console.log(userData.password);
 			const registerValidation = authUserRegister.validate(userData);
 			if (registerValidation.error) {
 				res.status(400).send({
