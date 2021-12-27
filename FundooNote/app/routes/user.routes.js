@@ -11,6 +11,6 @@ module.exports = (app) => {
     app.post("/forgotpassword", UserDataController.forgotPassword);
      // reset user password
     
-    app.post("/resetpassword", Helper.verifyToken, UserDataController.resetPassword);
+    app.post("/resetpassword",  UserDataController.resetPassword);
    
 };

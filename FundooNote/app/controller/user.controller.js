@@ -161,20 +161,12 @@ class UserDataController {
 	 console.log("inside controller");
 	try {
 	  const resetInfo = {
-		email: req.userData.email,
-		id: req.userData.id,
+		token:req.body.token,
 		newPassword: req.body.password
 	  };
-	  const resetVlaidation = validateReset.validate(resetInfo);
-		if (resetVlaidation.error) {
-		  console.log("Invalid password");
-		  res.status(400).send({
-			success: false,
-			message: "Invalid password"
-		  });
-		  return;
-		}
+	  
 	  UserService.resetPassword(resetInfo, (error, data) => {
+		  //console.log(data);
 		if (data) {
 		console.log("Password reset successfully");
 			return res.status(200).json({

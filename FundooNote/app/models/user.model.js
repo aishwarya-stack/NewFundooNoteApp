@@ -73,13 +73,14 @@ class UserModel {
 		console.log("inside model");
         Helper.hashing(resetInfo.newPassword, (err, hashedPassword) => {
           if (err) {
+			  console.log(err);
             throw err;
           } else {
-            const values = [hashedPassword,resetInfo.email]
-            console.log(values);
+            const values = [hashedPassword,process.env.EMAIL]
+            console.log("bcrypt pw"+ values);
             pool.query(queries.updateUser,values, (error, data) => {
               if (data) {
-                console.log("Password Updated successfully");
+                console.log("Password Updated successfully"+data);
                 return callback(null, data);
               } else {
                 console.log(error);
