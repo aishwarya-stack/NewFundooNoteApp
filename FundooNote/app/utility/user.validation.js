@@ -50,4 +50,3 @@ const authUserLogin = Joi.object({
 	  });
 
 module.exports = {authUserRegister,authUserLogin,validForgotPassword,authUserforgot,validateReset,resetSchema,validateNote};
-
