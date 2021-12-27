@@ -22,13 +22,26 @@ const authUserLogin = Joi.object({
 	const authUserforgot = Joi.object({
 		email: Joi.string().email().required()
 	  });
-const    validResetPassword =
-    Joi.object({
-      email: Joi.string().required().pattern(new RegExp("^^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")),
-      password: Joi.string().required().pattern(new RegExp("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$")),
-      code: Joi.string().required()
+	  validateReset = Joi.object({
+		random_string: Joi.string().required(),
+		password: Joi.string().min(8)
+		  .pattern(new RegExp("[A-Za-z0-9]{4,}[$&+,:;=?@#|<>.^*()%!-]{2,}"))
+		  .required()
+	  })
+	
+	  const resetSchema = Joi.object({
+		email: Joi.string().required(),
+		password: Joi.string()
+		  .min(8)
+		  .max(20)
+		  .pattern(
+			// eslint-disable-next-line prefer-regex-literals
+			new RegExp(
+			  "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#/$%/^&/*])(?=.{8,})"
+			)
+		  )
+		  .required()
+	  });
 
-    });
-
-module.exports = {authUserRegister,authUserLogin,validForgotPassword,authUserforgot,validResetPassword};
+module.exports = {authUserRegister,authUserLogin,validForgotPassword,authUserforgot,validateReset,resetSchema};
 

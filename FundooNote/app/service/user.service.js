@@ -56,16 +56,16 @@ class UserService {
 	  });
 	}
 	resetPassword = (resetInfo, callback) => {
-		UserModel.resetPassword(resetInfo, (err, data) => {
-			if (err) {
-			  callback(err, null);
-			} else if (!data) {
-			  callback("Code not found", null);
-			} else {
-			  callback(null, data);
-			}
-		  });
+		console.log("inside service");
+		UserModel.resetPassword(resetInfo, (error, data) => {
+		  if (data) {
+			return callback(null, data);
+		  } else {
+			return callback(error, null);
+		  }
+		});
 	  };
+		
 	}
 	
 

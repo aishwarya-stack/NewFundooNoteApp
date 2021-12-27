@@ -1,5 +1,5 @@
 const UserService = require("..//service/user.service");
-const { authUserRegister, authUserLogin, validForgotPassword, authUserforgot,validateReset,validResetPassword } = require("..//utility/user.validation");
+const { authUserRegister, authUserLogin, validForgotPassword, authUserforgot,validateReset} = require("..//utility/user.validation");
 const { genSaltSync, hashSync } = require("bcrypt");
 
 class UserDataController {
@@ -151,49 +151,54 @@ class UserDataController {
 		  }
 		};   
 	  
-		resetPassword = (req, res) => {
-			try {
-				const userResetPasswordInfo = {
-					email: req.body.email,
-					password: req.body.password,
-					code: req.body.code
-				  };
-				  const resetValidation = validResetPassword.validate(userResetPasswordInfo);
-				  console.log(resetValidation.error);
-				  if (resetValidation.error) {
-					res.status(400).send({
-					  success: false,
-					  message: resetValidation.error.message
-					});
-				  } else {
-					return res.status(200).send({
-					  success: true,
-					  message: "Email sent successfully"
-					});
-				  }
-				  UserService.resetPassword(userResetPasswordInfo, (err, data) => {
-					if (err) {
-					  return res.status(500).send({
-						success: false,
-						message: "Something went wrong"
-					  });
-					} else {
-					  return res.status(200).send({
-						success: true,
-						message: "Email sent successfully"
-					  });
-					}
-				  });
-				} catch (error) {
-				  console.log("Error", error);
-				  return res.status(500).send({
-					success: false,
-					message: "Internal server error",
-					result: null
-				  });
-				};
-			  }
-			}
+		/**
+     * @description:calls service layer to reset password
+     * @param {*} req
+     * @param {*} res
+     * @returns
+     */
+ resetPassword = (req, res) => {
+	 console.log("inside controller");
+	try {
+	  const resetInfo = {
+		email: req.userData.email,
+		id: req.userData.id,
+		newPassword: req.body.password
+	  };
+	  const resetVlaidation = validateReset.validate(resetInfo);
+		if (resetVlaidation.error) {
+		  console.log("Invalid password");
+		  res.status(400).send({
+			success: false,
+			message: "Invalid password"
+		  });
+		  return;
+		}
+	  UserService.resetPassword(resetInfo, (error, data) => {
+		if (data) {
+		console.log("Password reset successfully");
+			return res.status(200).json({
+			success: true,
+			message: "Password reset successfully"
+		  });
+		} else {
+			console.log(error);
+			return res.status(401).json({
+			success: false,
+			message: error
+		  });
+		}
+	  });
+	}catch (error) {
+		console.log(error);
+	  return res.status(500).json({
+		success: false,
+		data: null,
+		message: "server-error"
+	  });
+	}
+  }
+  }
 	  module.exports = new UserDataController();
 	
 

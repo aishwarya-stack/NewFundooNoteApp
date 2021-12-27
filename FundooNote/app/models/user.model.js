@@ -1,6 +1,6 @@
 const pool = require("..//../config/database.config");
 const queries = require("..//queries/user.queries");
-
+const Helper = require("../utility/user.authenticate");
 class UserModel {
 	/**
      * @description: Adds data to the database
@@ -64,8 +64,30 @@ class UserModel {
 	  return callback("Internal Error", null);
 	}
   }
-  resetPassword = (data, callback) => {
-    callback(null, data);
-  };
-}
+   /**
+     * @description:looks for data by id and updates password
+     * @param {*} resetInfo
+     * @param {*} callback
+     */
+	resetPassword = (resetInfo, callback) => {
+		console.log("inside model");
+        Helper.hashing(resetInfo.newPassword, (err, hashedPassword) => {
+          if (err) {
+            throw err;
+          } else {
+            const values = [hashedPassword,resetInfo.email]
+            console.log(values);
+            pool.query(queries.updateUser,values, (error, data) => {
+              if (data) {
+                console.log("Password Updated successfully");
+                return callback(null, data);
+              } else {
+                console.log(error);
+                return callback(error, null);
+              }
+            });
+          }
+        });
+      }
+    }
 module.exports = new UserModel(); 
