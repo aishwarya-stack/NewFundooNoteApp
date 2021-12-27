@@ -2,6 +2,7 @@ const UserModel = require("../models/user.model");
 const auth = require("..//utility/user.authenticate");
 const  bcrypt  = require("bcrypt");
 const nodemailer = require("../utility/user.nodemailer");
+const { logger } = require("../../logger/logger");
 class UserService {
 	/**
      * @description: Function sends new user info to model
@@ -29,16 +30,16 @@ class UserService {
 		// call model layer
 		UserModel.loginUser(loginData, (err, data) => {
 		  if (err) {
-			console.log("Error found in service");
+			logger.error("Error found in service");
 			return authenticateUser(err, null);
 		  } else {
 			const result = bcrypt.compareSync(loginData.password, data.password);
 			if (result) {
 			  const token = auth.jwtTokenGenerate(data);
-			  console.log("Valid Password");
+			  logger.info("Valid Password");
 			  return authenticateUser(null, token);
 			} else {
-			  console.log("Password does not match");
+				logger.error("Password does not match");
 			  return authenticateUser("Password does not match", null);
 			}
 		  };

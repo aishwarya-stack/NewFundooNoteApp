@@ -3,7 +3,7 @@ require('dotenv').config();
 const bcrypt = require("bcrypt");
 const queries = require("..//queries/user.queries");
 const pool = require('..//..//config/database.config');
-
+const { logger } = require("../../logger/logger");
 class Helper {
   hashing = (password, callback) => {
     bcrypt.hash(password, 10, (err, hashpassword) => {
@@ -40,11 +40,11 @@ class Helper {
       const values = [process.env.email];
       pool.query(queries.verifyString,values,(error,data)=>{
       if (error) {
-      console.log("data does not found!");
+       logger.error("data does not found!");
       return res.status(401).send({success:false,message:"data is not there!"});
 
       }if (data.rows[0].random_string==string) {
-      console.log("string verified successfully!");
+        logger.error("data does not found!");
           next();
       }
        else{

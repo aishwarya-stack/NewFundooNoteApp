@@ -1,7 +1,7 @@
 const UserService = require("..//service/user.service");
 const { authUserRegister, authUserLogin, validForgotPassword, authUserforgot,validateReset} = require("..//utility/user.validation");
 const { genSaltSync, hashSync } = require("bcrypt");
-
+const { logger } = require("../../logger/logger")
 class UserDataController {
 	/**
 	 * @description : Function created to add user into database
@@ -20,7 +20,7 @@ class UserDataController {
 			};
 			const Salt = genSaltSync(10);
 			userData.password = hashSync(req.body.password, Salt);
-			console.log(userData.password);
+			//console.log(userData.password);
 			const registerValidation = authUserRegister.validate(userData);
 			if (registerValidation.error) {
 				res.status(400).send({
@@ -28,6 +28,7 @@ class UserDataController {
 					message: "Enter valid fields",
 					data: registerValidation
 				});
+				logger.error("Invalid Details");
 				return;
 			}
 			console.log("incontroller1", registerValidation);
@@ -39,6 +40,7 @@ class UserDataController {
 					});
 
 				} else {
+					logger.info("user registered");
 					res.status(200).json({
 						success: true,
 						message: "user successfully registered",
@@ -48,7 +50,7 @@ class UserDataController {
 				}
 			});
 		} catch (err) {
-			console.log(err);
+			logger.error("Internal server error");
 			return res.status(500).json({
 				success: false,
 				message: "Server-Error",
@@ -125,13 +127,13 @@ class UserDataController {
 		  }
 		  UserService.forgotPassword(user, (error, data) => {
 			if (error) {
-				console.log("email id is not exist");
+				logger.error("email id is not exist");
 				  return res.status(409).json({
 					success: false,
 					message: "email id is not exist"
 				  });
 				} else {
-				  console.log("email send Successfully");
+				logger.info("email send Successfully");
 				  res.status(201).json({
 					success: true,
 					data: data,
@@ -142,7 +144,7 @@ class UserDataController {
 					});
 	
 			} catch (error) {
-			  console.log("server-error",error);
+				logger.error("server-error");
 			  return res.status(500).json({
 				success: false,
 				data: null,
@@ -168,13 +170,13 @@ class UserDataController {
 	  UserService.resetPassword(resetInfo, (error, data) => {
 		  //console.log(data);
 		if (data) {
-		console.log("Password reset successfully");
+			logger.info("Password reset successfully");
 			return res.status(200).json({
 			success: true,
 			message: "Password reset successfully"
 		  });
 		} else {
-			console.log(error);
+			logger.error(error);
 			return res.status(401).json({
 			success: false,
 			message: error
@@ -182,7 +184,6 @@ class UserDataController {
 		}
 	  });
 	}catch (error) {
-		console.log(error);
 	  return res.status(500).json({
 		success: false,
 		data: null,

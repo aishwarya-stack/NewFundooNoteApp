@@ -2,6 +2,7 @@ const nodemailer = require('nodemailer');
 require('dotenv').config
 const pool = require('../../config/database.config');
 const queries = require("..//queries/user.queries");
+const { logger } = require("../../logger/logger");
 exports.sendEmail = (data,callback) => {
   let code = Math.random().toString(36).substring(2, 15)
   const transporter = nodemailer.createTransport({
@@ -15,7 +16,7 @@ exports.sendEmail = (data,callback) => {
       pass:"8605025507"
     }
   });
-  console.log("Jwt Token Generate");
+  logger.info("Jwt Token Generate");
   
   //const token = Helper.jwtTokenGenerate(data);
   const mailOptions = {
