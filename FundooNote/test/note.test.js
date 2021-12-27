@@ -96,4 +96,25 @@ it.only("when call createNoteAPI, should return appropriate response from model"
       return done();
     });
 });
+it.only("when call createNoteAPI with validToken, should return appropriate response from model", (done) => {
+  const token = noteInputs.notes.loginValidToken;
+  const createNotes = {
+    title:"google" ,
+    description: "google is good search engine"
+  };
+  chai
+    .request(server)
+    .post("/createnote")
+    .set({ authorization: token })
+    .send({createNotes })
+    .end((err, res) => {
+      if (err) {
+        console.log("plz check your credential");
+        return done();
+      }
+      res.should.have.status(201);
+      return done();
+    });
 });
+});
+
