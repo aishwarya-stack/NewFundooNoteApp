@@ -1,6 +1,6 @@
 {
     "notes": {
-        "loginValidToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5OCwiZW1haWwiOiJwcmFzaGFudGJob3NhbGUxMjNAZ21haWwuY29tIiwiaWF0IjoxNjQwNjI2NjU3LCJleHAiOjE2NDA3MTMwNTd9.tpwQI_-eXEDhd-LqyrjJ39xP8xNSr8Qk2ugmUh33uvE",
+        "loginValidToken": " Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5OCwiZW1haWwiOiJwcmFzaGFudGJob3NhbGUxMjNAZ21haWwuY29tIiwiaWF0IjoxNjQwNjI2NjU3LCJleHAiOjE2NDA3MTMwNTd9.tpwQI_-eXEDhd-LqyrjJ39xP8xNSr8Qk2ugmUh33uvE",
         "TokenInvalid":"Bearer sgfgJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMDUsImVtYWlsIjoibWF5dXJrYWxla2FyMDg3QGdtYWlsLmNvbSIsImlhdCI6MTYzNzMwNzg5NywiZXhwIjoxNjM3Mzk0Mjk3fQ.LpQoZSGbxt7DVb-ZdRytb_FMW518UPMPeotKDLCT2yA",
         "EmptyToken":"",
         "EmptyTitleAndDis":{

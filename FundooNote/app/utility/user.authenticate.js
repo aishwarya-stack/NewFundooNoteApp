@@ -1,14 +1,15 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const { logger } = require("../../logger/logger");
 const bcrypt = require("bcrypt");
 const queries = require("..//queries/user.queries");
 const pool = require('..//..//config/database.config');
-const { logger } = require("../../logger/logger");
+
 class Helper {
   hashing = (password, callback) => {
     bcrypt.hash(password, 10, (err, hashpassword) => {
       if (err) {
-        console.log("error is hashing");
+        logger.error("error is hashing");
         return callback(err, null);
       } else {
         return callback(null, hashpassword);
@@ -40,11 +41,11 @@ class Helper {
       const values = [process.env.email];
       pool.query(queries.verifyString,values,(error,data)=>{
       if (error) {
-       logger.error("data does not found!");
+      logger.error("data does not found!");
       return res.status(401).send({success:false,message:"data is not there!"});
 
       }if (data.rows[0].random_string==string) {
-        logger.error("data does not found!");
+          logger.info("string verified successfully!");
           next();
       }
        else{
@@ -55,14 +56,13 @@ class Helper {
       return res.status(500).send({success:false,message:"something went wrong"});
     }
   }
-   /* 
+   /**
    * verifytoken
    * @param {*} req
    * @param {*} res
    * @param {*} next
    */
-  /*
-   verifyToken = (req, res, next) => {
+    verifyToken = (req, res, next) => {
       const header = req.headers.authorization;
       const myArr = header.split(" ");
       const token = myArr[1];
@@ -83,23 +83,5 @@ class Helper {
         return res.status(500).send({ success: false, message: "Something went wrong!" });
       }
     }
-    */
-    verifyToken = (req,res,next)=>{
-      try{
-      const values = [process.env.email]
-      console.log(values);
-      pool.query(queries.verifyToken,values,(err,data)=>{
-        if(err){
-          return res.status(404).send({success:false,message:"invalid"});
-        }
-        if(data){
-          return res.status(201).send({success:true,message:"token verified"});
-          next();
-        }
-      })
-    }catch(error){
-      return res.status(500).send({success:false,message:"something went wrong"});
-     }
-   }
  }
 module.exports = new Helper();
