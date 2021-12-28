@@ -7,6 +7,7 @@ const verifyToken = "select pw_reset_token from users where emailid=$1";
 const verifyString = "select random_string from expire_table1 where email=$1";
 const createNote = "INSERT INTO note (user_id,title,description) VALUES ($1,$2,$3) RETURNING *";
 const getNote =    "select * from note";
+const getNoteById = "select * from note where note_id=$1";
 module.exports={
 	createUser,
 	loginUser,
@@ -16,5 +17,6 @@ module.exports={
 	verifyToken,
 	verifyString,
 	createNote,
-	getNote
+	getNote,
+	getNoteById
 };
