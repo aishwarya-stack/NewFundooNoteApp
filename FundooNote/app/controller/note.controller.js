@@ -65,13 +65,28 @@ class noteController {
         message: "Successfully !! given note retrieve......",
         success: true
       });
-    } catch (error) {
-      return res.status(500).json({
-        message: "Internal server error",
+      noteService.getNoteById(id, (err, data) => {
+        if (err) {
+          return res.status(401).json({
+            message: "Note not found",
+            success: false
+          });
+        } else {
+          return res.status(200).json({
+            message: "Note retrived succesfully",
+            success: true,
+            data: data
+          });
+        }
+      });
+    } catch (err) {
+      return res.status(401).json({
+        error: err,
         success: false
       });
     }
   }
-}
+    }
+  
 
   module.exports = new noteController();
