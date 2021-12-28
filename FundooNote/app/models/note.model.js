@@ -23,5 +23,8 @@ class noteModel {
         }
       });
     };
+    getNoteById = (id, callback) => {
+      return callback(null, id);
+    }
   }
     module.exports = new noteModel();

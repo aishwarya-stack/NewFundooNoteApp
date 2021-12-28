@@ -213,7 +213,7 @@ describe("GetNoteById", () => {
     const id = noteInputs.notes.InvalidId;
     chai
       .request(server)
-      .get(`/getnotesbyid/100`)
+      .get(`/getnotesbyid/${id}`)
       .set({ authorization: token })
       .end((err, res) => {
         if (err) {
@@ -255,7 +255,23 @@ describe("GetNoteById", () => {
         res.should.have.status(201);
         return done();
       });
-  });      
+  });
+  it.only("when call getNoteById with validToken , should return appropriate response from model", (done) => {      
+    const token = noteInputs.notes.loginValidToken;
+    const id = noteInputs.notes.GetById;
+    chai
+      .request(server)
+      .get(`/getnotesbyid/${id}`)
+      .set({ authorization: token })
+      .end((err, res) => {
+        if (err) {
+          console.log("plz check your credential");
+          return done(err);
+        }
+        res.should.have.status(201);
+        return done();
+      });
+  });
 });
 
 

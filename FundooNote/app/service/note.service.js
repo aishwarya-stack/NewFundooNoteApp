@@ -22,9 +22,19 @@ class Service {
         });
       }
       getNoteById = (id, callback) => {
-        return callback(null, id);
+        try {
+        noteModel.getNoteById(id, (err, data) => {
+          if (err) {
+            return callback(err, null);
+          } else {
+            return callback(null, data);
+          }
+        });
+      } catch (err) {
+        return err;
       }
     }
+  }   
     
   module.exports = new Service();
  
