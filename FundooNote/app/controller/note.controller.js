@@ -34,5 +34,19 @@ class noteController {
       });
     }
   }
+  getNote = (req, res) => {
+    try {
+          logger.error("Failed to get all notes");
+          return res.status(201).send({
+            message: "Note inserted Successfully",
+            success: true
+          });
+    } catch {
+      logger.error("Error occured while retrieving notes");
+      return res.status(500).json({
+        message: "Internal Error"
+      });
+    }
+  }
 }
   module.exports = new noteController();

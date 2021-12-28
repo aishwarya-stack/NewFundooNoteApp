@@ -19,7 +19,7 @@ beforeEach((done) => {
       });
 });
 describe("Create Note", () => {
-  it.only("when call create note api, should return appropriate response from controller", (done) => {
+  it("when call create note api, should return appropriate response from controller", (done) => {
     const token = noteInputs.notes.loginValidToken;
     chai
       .request(server)
@@ -35,7 +35,7 @@ describe("Create Note", () => {
         return done();
       });
   });
-  it.only("give valid input, should return appropriate response from controller", (done) => {
+  it("give valid input, should return appropriate response from controller", (done) => {
     const token = noteInputs.notes.loginValidToken;
     const createNotes = {
       title:"google" ,
@@ -56,7 +56,7 @@ describe("Create Note", () => {
       });
   });
 
-it.only("when call createNoteAPI, should return appropriate response from service", (done) => {
+it("when call createNoteAPI, should return appropriate response from service", (done) => {
   const token = noteInputs.notes.loginValidToken;
   const createNotes = {
     title:"google" ,
@@ -76,7 +76,7 @@ it.only("when call createNoteAPI, should return appropriate response from servic
       return done();
     });
 });
-it.only("when call createNoteAPI, should return appropriate response from model", (done) => {
+it("when call createNoteAPI, should return appropriate response from model", (done) => {
   const token = noteInputs.notes.loginValidToken;
   const createNotes = {
     title:"google" ,
@@ -96,7 +96,7 @@ it.only("when call createNoteAPI, should return appropriate response from model"
       return done();
     });
 });
-it.only("when call createNoteAPI with validToken, should return appropriate response from model", (done) => {
+it("when call createNoteAPI with validToken, should return appropriate response from model", (done) => {
   const token = noteInputs.notes.loginValidToken;
   const createNotes = {
     title:"google" ,
@@ -117,4 +117,34 @@ it.only("when call createNoteAPI with validToken, should return appropriate resp
     });
 });
 });
+describe("Get all Notes", () => {
+  it.only("when call getNote api without token, should return appropriate response from controller", (done) => {
+    chai
+      .request(server)
+      .get("/getnotes")
+      .end((err, res) => {
+        if (err) {
+          console.log("plz check your credential");
+          return done();
+        }
+        res.should.have.status(500);
+        return done();
+      });
+  });
 
+  it.only("when call getNote api with token, should return appropriate response from controller", (done) => {
+    const token = noteInputs.notes.loginValidToken;
+    chai
+      .request(server)
+      .get("/getnotes")
+      .set({ authorization: token })
+      .end((err, res) => {
+        if (err) {
+          console.log("plz check your credential");
+          return done();
+        }
+        res.should.have.status(201);
+        return done();
+      });
+  });
+});

@@ -13,6 +13,7 @@ module.exports = (app) => {
      // reset user password
     
     app.post("/resetpassword",UserDataController.resetPassword);
-    app.post("/createnote",Helper.verifyToken, noteController.createNote);
-   
+    app.post("/createnote", noteController.createNote);
+    
+    app.get("/getnotes", noteController.getNote);
 };
