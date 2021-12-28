@@ -6,6 +6,7 @@ const resetUser = "UPDATE users SET pw_reset_token = $1 WHERE emailid = $2";
 const verifyToken = "select pw_reset_token from users where emailid=$1";
 const verifyString = "select random_string from expire_table1 where email=$1";
 const createNote = "INSERT INTO note (user_id,title,description) VALUES ($1,$2,$3) RETURNING *";
+const getNote =    "select * from notes2";
 module.exports={
 	createUser,
 	loginUser,
@@ -14,5 +15,6 @@ module.exports={
 	updateUser,
 	verifyToken,
 	verifyString,
-	createNote
+	createNote,
+	getNote
 };
