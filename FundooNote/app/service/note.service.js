@@ -12,10 +12,14 @@ class Service {
           }
         });
       }
-        getNote = (callback) => {
-          if (data) {
+      getNote = (callback) => {
+        noteModel.getNote((err, data) => {
+          if (err) {
+            return callback(err, null);
+          } else {
             return callback(null, data);
           }
+        });
       }
     }
   module.exports = new Service();

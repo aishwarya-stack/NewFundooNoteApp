@@ -176,6 +176,22 @@ describe("Get all Notes", () => {
         done();
       });
   });
+  it.only("when call getNote api , should return appropriate response from model", (done) => {
+    const token = noteInputs.notes.loginValidToken;
+    chai
+      .request(server)
+      .get("/getnotes")
+      .set({ authorization: token })
+      .end((err, res) => {
+        if (err) {
+          console.log("plz check your credential");
+          return done();
+        }
+        res.should.have.status(201);
+        return done();
+      });
+  });
 });
+
 
 
