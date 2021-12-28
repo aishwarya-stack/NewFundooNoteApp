@@ -1,10 +1,10 @@
 {
     "user":{
         "validDetails":{
-        "firstName":"Prashant",
-        "lastName":"Bhosale",
-        "email":"prashantbhosale123@gmail.com",
-        "password":"Prashant@123"
+        "firstName":"Prajakta",
+        "lastName":"Devre",
+        "email": "prajakta123@gmail.com",
+        "password": "Aishwraya@97"
         },
         "detailsWithEmptydFirstName":{
             "firstName":"",
