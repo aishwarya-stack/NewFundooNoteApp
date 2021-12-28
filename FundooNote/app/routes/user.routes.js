@@ -16,5 +16,5 @@ module.exports = (app) => {
     app.post("/createnote", Helper.verifyToken,noteController.createNote);
     
     app.get("/getnotes",Helper.verifyToken, noteController.getNote);
-    app.get("/getnotesbyid/", Helper.verifyToken, noteController.getNoteById);
+    app.get("/getnotesbyid/:note_id", Helper.verifyToken, noteController.getNoteById);
 };

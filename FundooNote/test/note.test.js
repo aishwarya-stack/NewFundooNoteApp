@@ -213,7 +213,8 @@ describe("GetNoteById", () => {
     const id = noteInputs.notes.InvalidId;
     chai
       .request(server)
-      .get("/getnotesbyid/${id}")
+      .get(`/getnotesbyid/100`)
+      .set({ authorization: token })
       .end((err, res) => {
         if (err) {
           console.log("plz check your credential");
@@ -228,7 +229,7 @@ describe("GetNoteById", () => {
     const id = noteInputs.notes.GetById;
     chai
       .request(server)
-      .get("/getnotesbyid/")
+      .get(`/getnotesbyid/${id}`)
       .set({ authorization: token })
       .end((err, res) => {
         if (err) {
@@ -239,6 +240,7 @@ describe("GetNoteById", () => {
         return done();
       });
   });
+ 
 });
 
 
