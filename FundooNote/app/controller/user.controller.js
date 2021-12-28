@@ -191,7 +191,8 @@ class UserDataController {
 	  });
 	}
   }
-  }
+}
+  
 	  module.exports = new UserDataController();
 	
 

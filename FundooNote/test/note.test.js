@@ -207,6 +207,23 @@ describe("Get all Notes", () => {
       });
   });
 });
+describe("GetNoteById", () => {
+  it.only("when call getNoteById with InvalidToken , should return appropriate response", (done) => {
+    const token = noteInputs.notes.TokenInvalid;
+    const id = noteInputs.notes.InvalidId;
+    chai
+      .request(server)
+      .get(`/getnotesbyid/${id}`)
+      .end((err, res) => {
+        if (err) {
+          console.log("plz check your credential");
+          return done();
+        }
+        res.should.have.status(404);
+        return done();
+      });
+  });
+});
 
 
 
