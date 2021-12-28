@@ -62,7 +62,7 @@ class Helper {
    * @param {*} res
    * @param {*} next
    */
-    verifyToken = (req, res, next) => {
+    /*verifyToken = (req, res, next) => {
       const header = req.headers.authorization;
       const myArr = header.split(" ");
       const token = myArr[1];
@@ -82,6 +82,24 @@ class Helper {
       } catch (error) {
         return res.status(500).send({ success: false, message: "Something went wrong!" });
       }
-    }
+    }*/
+    verifyToken = (req,res,next)=>{
+      try{
+      const values = [process.env.email]
+      console.log(values);
+      pool.query(queries.verifyToken,values,(err,data)=>{
+        if(err){
+          return res.status(404).send({success:false,message:"invalid"});
+        }
+        if(data){
+          return res.status(201).send({success:true,message:"token verified"});
+          next();
+        }
+      })
+    }catch(error){
+      return res.status(500).send({success:false,message:"something went wrong"});
+     }
+   }
  }
+ 
 module.exports = new Helper();

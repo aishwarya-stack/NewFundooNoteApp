@@ -12,6 +12,11 @@ class Service {
           }
         });
       }
+        getNote = (callback) => {
+          if (data) {
+            return callback(null, data);
+          }
+      }
     }
   module.exports = new Service();
  

@@ -36,11 +36,22 @@ class noteController {
   }
   getNote = (req, res) => {
     try {
+       noteService.getNote((err, data) => {
+        if (err) {
           logger.error("Failed to get all notes");
-          return res.status(201).send({
-            message: "Note inserted Successfully",
-            success: true
+          return res.status(400).json({
+            message: "failed to get note",
+            success: false
           });
+        } else {
+          logger.info("All notes retrived");
+          return res.status(201).json({
+            message: "Notes retrived successfully",
+            success: true,
+            data: data
+          });
+        }
+      });
     } catch {
       logger.error("Error occured while retrieving notes");
       return res.status(500).json({
