@@ -45,7 +45,11 @@ class Service {
       }
       )
   }
-}  
+  deleteNoteById = (id) => {
+    return callback(id);
+  };
+}
+
     
   module.exports = new Service();
  

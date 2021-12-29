@@ -123,14 +123,18 @@ class noteController {
     }
     deleteNoteById = (req, res) => {
       try {
-        return res.status(201).send({
-          message: "Successfully id is found",
-          success: true
+        const id = { note_id: req.params.note_id, user_id: req.body.user_id};
+        const data =  noteService.deleteNoteById(id);
+        return res.status(200).json({
+          message: "Note Deleted succesfully",
+          success: true,
+          data: data
         });
-      } catch {
+      } catch (err) {
         return res.status(500).json({
-          message: "Internal server error",
-          success: false
+          message: "Note not updated",
+          success: false,
+          data: err
         });
       }
     }
