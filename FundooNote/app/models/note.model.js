@@ -37,9 +37,9 @@ class noteModel {
         return err;
       }
     }
-    updateNoteById = (updateNote, callback) => {
+    updateNoteById = (updatedNote, callback) => {
       try {
-        const values = [updatedNote.title,updatedNote.description,updatedNote.note_id];
+        const values = [updatedNote.title,updatedNote.description,updatedNote.note_id,updatedNote.user_id];
         pool.query(queries.updateNote,values,(err, data) => {
           if (err) {
             return callback(err, null);

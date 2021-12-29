@@ -195,51 +195,115 @@
                 }
             }
         },
-    "/getnotesid/{id}": {
-        "get": {
-            "tags": [
-                "Get Notes"
-            ],
-            "description": "Get a note by ID for perticuler notes id",
-            "parameters": [
-                {
-                    "in": "header",
-                    "name": "Authorization",
-                    "description": "Token for vaidation",
-                    "schema": {
-                        "type": "string",
-                        "required": true
+        "/getnotesid/{id}": {
+            "get": {
+                "tags": [
+                    "Get Notes"
+                ],
+                "description": "Get a note by ID for perticuler notes id",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of note",
+                        "schema": {
+                            "type": "string"
+                        }
                     }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "schema": {
+                    "$ref": "#/definitions/notes"
                 },
-                {
-                    "name": "id",
-                    "in": "path",
-                    "description": "Id of note",
-                    "schema": {
-                        "type": "string"
+                "responses": {
+                    "201": {
+                        "description": "Get note succesfully !!"
+                    },
+                    "400": {
+                        "description": "Please enter Valid Token"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
-                }
-            ],
-            "produces": [
-                "application/json"
-            ],
-            "schema": {
-                "$ref": "#/definitions/notes"
-            },
-            "responses": {
-                "201": {
-                    "description": "Get note succesfully !!"
-                },
-                "400": {
-                    "description": "Please enter Valid Token"
-                },
-                "500": {
-                    "description": "Internal server error"
                 }
             }
         }
-    }
- },
+    
+        },
+        "/updatenotes/{id}":{
+            "put":{
+              "tags":["Update notes"],
+              "description":"Update note",
+              "parameters":[
+                {"in":"header",
+                "name":"authorization",
+                "description":"Token for validation",
+                "schema":{
+                  "type":"string",
+                  "required":true
+                }
+              },
+              {
+                "in":"path",
+                "name":"id",
+                "description":"Id of note you want to update",
+                "schema":{"type":"string"}
+              },
+              {
+                "in":"body",
+                "name":"Note",
+                "description":"Note body",
+                "schema":{"$ref":"#/definitions/notes"}
+              }
+              ],"produces":["application/json"],
+              "responses":{
+                "200":{"description":"Note updated successfully"},
+                "400":{"description":"Please enter valid token"},
+                "500":{"description":"Internal server error"}
+              }
+            }
+        },
+        "/deletenotes/{id}":{
+          "delete":{
+            "tags":["Delete note"],
+            "description":"Delete notes",
+            "parameters":[
+              {"in":"header",
+              "name":"authorization",
+              "description":"Token for validation",
+              "schema":{
+                "type":"string",
+                "required":true
+              }
+            },
+            {
+              "in":"path",
+              "name":"id",
+              "description":"Id of note you want to update",
+              "schema":{"type":"string"}
+            }
+            ],"produces":["application/json"],
+            "responses":{
+              "200":{"description":"Note deleted successfully"},
+              "401":{"description":"Please enter valid token"},
+              "500":{"description":"Internal server error"}
+            }
+
+          }
+          },
+
+
     "definitions": {
         "registerUser": {
             "type": "object",
@@ -261,52 +325,51 @@
                 }
             }
         },
-        "loginUser": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "forgotpassword": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                }
-            }
-        },
-        "resetpassword": {
-            "type": "object",
-            "properties": {
-                "token": {
-                "random_string": {
-                    "type": "string"
-                },
-                "password": {    "type": "string"
-                }
-            }
-        },
-        "notes": {
-            "type": "object",
-            "properties": {
-                "title": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
+            "loginUser": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
                 }
             },
-            "example": {
-                "user_id":12,
-                "title": "Tittle",
-                "description": "description"
+            "forgotpassword": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    }
+                }
+            },
+            "resetpassword": {
+                "type": "object",
+                "properties": {
+                    "random_string": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "notes": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "user_id":12,
+                    "title": "Tittle",
+                    "description": "description"
+                }
             }
         }
     }
-    }
-}
