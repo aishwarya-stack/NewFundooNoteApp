@@ -12,7 +12,10 @@
         "EmptyId":"",
         "UpdateById":"9",
         "UpdateById_InvalidId":"12",
-         "UpdateById_EmptyId":""
+         "UpdateById_EmptyId":"",
+         "DeleteById":"9",
+    "DeleteById_InvalidId":"12l",
+    "DeleteById_EmptyId":""
    }
 
 }   
