@@ -103,10 +103,21 @@ class noteController {
             message: "Please enter valid note"
           });
         }
-        return res.status(201).json({
-          message: "successfully note updated......",
-          message: "Getting Appropriate response from token",
-          success: true
+        noteService.updateNoteById(updateNote, (error, data) => {
+          if (error) {
+            logger.error("Note not updated");
+            return res.status(400).json({
+              message: "Note not updated",
+              success: false
+            });
+          } else {
+            logger.info("Successfully note updated");
+            return res.status(201).send({
+              message: "Successfully note updated",
+              success: true,
+              data: data
+            });
+          }
         });
       } catch (error) {
         return res.status(500).json({

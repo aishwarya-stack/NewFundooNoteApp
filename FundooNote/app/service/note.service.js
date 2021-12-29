@@ -34,7 +34,11 @@ class Service {
         return err;
       }
     }
-  }   
+    updateNoteById = (updateNote, callback) => {
+      return callback(null, data);
+    }
+  }
+   
     
   module.exports = new Service();
  
