@@ -46,7 +46,13 @@ class Service {
       )
   }
   deleteNoteById = (id) => {
-    return callback(id);
+    deleteNoteById =  (id) => {
+      try {
+        return  noteModel.deleteNoteById(id);
+      } catch (err) {
+        return err;
+      }
+    }
   };
 }
 

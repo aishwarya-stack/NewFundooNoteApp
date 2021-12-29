@@ -51,6 +51,10 @@ class noteModel {
         return callback(err, null);
       }
     }
-  }
+    deleteNoteById =  (id) => {
+      return callback(id); 
+      }
+    }
+  
   
     module.exports = new noteModel();

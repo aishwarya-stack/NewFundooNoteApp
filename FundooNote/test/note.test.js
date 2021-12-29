@@ -463,4 +463,20 @@ it.only("when call DeleteNote api, should return proper response from service", 
       done();
     });
 });
+it.only("when call DeleteNote api, should return proper response from model", (done) => {
+
+  const token = noteInputs.notes.loginValidToken;
+  const id = noteInputs.notes.DeleteById;
+  chai
+    .request(server)
+    .delete(`/deletenotes/${id}`)
+    .set({ authorization: token })
+    .end((err, res) => {
+      if (err) {
+        return done(err);
+      }
+      res.should.have.status(201);
+      done();
+    });
+});
 });
