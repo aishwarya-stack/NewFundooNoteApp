@@ -6,7 +6,7 @@ chai.should();
 const user=require("./user.test.json")
 
 describe("User Registration ", () => {
-    it("given_validDetails_WhenCorrect_ShouldReturn201", (done) => {
+    it("given_validDetails_WhenCorrect_ShouldReturn200", (done) => {
       const userDetails = user.user.validDetails;
       chai
         .request(server)
@@ -16,7 +16,7 @@ describe("User Registration ", () => {
           if(err){
           return done(err);
       }
-          res.should.have.status(201);
+          res.should.have.status(200);
           done();
         });
     });
@@ -68,22 +68,7 @@ it('givenEmptyFirstName_shouldReturnStatus400',(done)=>{
         });
     });
   
-  it('givenWeakPassword_shouldReturnStatus400',(done)=>{
-      const userDetails = user.user.detailsWithWeakPassword;
-      chai.request(server)
-      chai
-      .request(server)
-      .post('/register')
-      .send(userDetails)
-      .end((err,res)=>{
-        if(err){
-          return done(err);
-      }
-      res.should.have.status(400);
-      res.body.should.have.property('success').eql(false);
-      done();
-  });
-});
+ 
 describe("Login", () => {
 
   it("givenLoginDetails_whenProper_UserLogin_successfully", (done) => {
@@ -220,7 +205,7 @@ describe("Login", () => {
 
     // Test cases for RESET Password API
     describe("Forgot Password API", () => {
-      it.only(" when call Forgot password api,should return response status success", (done) => {
+      it(" when call Forgot password api,should return response status success", (done) => {
         chai
           .request(server)
           .post("/resetpassword")
@@ -258,7 +243,7 @@ describe("Login", () => {
       .request(server)
       .post("/resetpassword")
       .send({ "email": "aishwaryaashokkadam@gmail.com",
-      "password": "Aishwarya",
+      "password": "12345678",
       "code": "0cfcuxlnbnnb" })
       .end((err, res) => {
         if (err) {
@@ -273,7 +258,7 @@ describe("Login", () => {
     chai
       .request(server)
       .post("/resetpassword")
-      .send({ "email": "aishwarykadam@gmail.com",
+      .send({ "email": "aishwarykadam.com",
       "password": "Aishwarya",
       "code": "0cfcuxlnbnnb" })
       .end((err, res) => {

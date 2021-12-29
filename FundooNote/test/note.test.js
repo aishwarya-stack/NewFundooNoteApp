@@ -118,7 +118,7 @@ it("when call createNoteAPI with validToken, should return appropriate response 
 });
 });
 describe("Get all Notes", () => {
-  it.only("when call getNote api without token, should return appropriate response from controller", (done) => {
+ /* it("when call getNote api without token, should return appropriate response from controller", (done) => {
     chai
       .request(server)
       .get("/getnotes")
@@ -127,12 +127,12 @@ describe("Get all Notes", () => {
           console.log("plz check your credential");
           return done();
         }
-        res.should.have.status(500);
+        res.should.have.status(400);
         return done();
       });
   });
-
-  it.only("when call getNote api with token, should return appropriate response from controller", (done) => {
+*/
+  it("when call getNote api with token, should return appropriate response from controller", (done) => {
     const token = noteInputs.notes.loginValidToken;
     chai
       .request(server)
@@ -147,7 +147,7 @@ describe("Get all Notes", () => {
         return done();
       });
   });
-  it.only("when call getNote api with token, should return appropriate response from controller", (done) => {
+  it("when call getNote api with token, should return appropriate response from controller", (done) => {
     const token = noteInputs.notes.loginValidToken;
     chai
       .request(server)
@@ -162,7 +162,7 @@ describe("Get all Notes", () => {
         return done();
       });
   });
-  it.only("when call getNote api , should return appropriate response from service", (done) => {
+  it("when call getNote api , should return appropriate response from service", (done) => {
     const token = noteInputs.notes.loginValidToken;
     chai
       .request(server)
@@ -176,7 +176,7 @@ describe("Get all Notes", () => {
         done();
       });
   });
-  it.only("when call getNote api , should return appropriate response from model", (done) => {
+  it("when call getNote api , should return appropriate response from model", (done) => {
     const token = noteInputs.notes.loginValidToken;
     chai
       .request(server)
@@ -191,7 +191,7 @@ describe("Get all Notes", () => {
         return done();
       });
   });
-  it.only("when call getNote api then get all note , should return appropriate response", (done) => {
+  it("when call getNote api then get all note , should return appropriate response", (done) => {
     const token = noteInputs.notes.loginValidToken;
     chai
       .request(server)
@@ -208,12 +208,11 @@ describe("Get all Notes", () => {
   });
 });
 describe("GetNoteById", () => {
-  it.only("when call getNoteById with InvalidToken , should return appropriate response", (done) => {
+  it("when call getNoteById with InvalidToken , should return appropriate response", (done) => {
     const token = noteInputs.notes.TokenInvalid;
-    const id = noteInputs.notes.InvalidId;
     chai
       .request(server)
-      .get(`/getnotesbyid/${id}`)
+      .get(`/getnotesbyid/`)
       .set({ authorization: token })
       .end((err, res) => {
         if (err) {
@@ -224,7 +223,7 @@ describe("GetNoteById", () => {
         return done();
       });
   });
-  it.only("when call getNoteById with validToken , should return appropriate response", (done) => {
+  it("when call getNoteById with validToken , should return appropriate response", (done) => {
     const token = noteInputs.notes.loginValidToken;
     const id = noteInputs.notes.GetById;
     chai
@@ -236,11 +235,11 @@ describe("GetNoteById", () => {
           console.log("plz check your credential");
           return done(err);
         }
-        res.should.have.status(201);
+        res.should.have.status(200);
         return done();
       });
   });
-  it.only("when call getNoteById with validToken , should return appropriate response from service", (done) => {
+  it("when call getNoteById with validToken , should return appropriate response from service", (done) => {
     const token = noteInputs.notes.loginValidToken;
     const id = noteInputs.notes.GetById;
     chai
@@ -252,11 +251,11 @@ describe("GetNoteById", () => {
           console.log("plz check your credential");
           return done(err);
         }
-        res.should.have.status(201);
+        res.should.have.status(200);
         return done();
       });
   });
-  it.only("when call getNoteById with validToken , should return appropriate response from model", (done) => {      
+  it("when call getNoteById with validToken , should return appropriate response from model", (done) => {      
     const token = noteInputs.notes.loginValidToken;
     const id = noteInputs.notes.GetById;
     chai
@@ -268,11 +267,11 @@ describe("GetNoteById", () => {
           console.log("plz check your credential");
           return done(err);
         }
-        res.should.have.status(201);
+        res.should.have.status(200);
         return done();
       });
   });
-  it.only("when call getNoteById with validToken using find method , should return appropriate response from model", (done) => {
+  it("when call getNoteById with validToken using find method , should return appropriate response from model", (done) => {
     const token = noteInputs.notes.loginValidToken;
     const id = noteInputs.notes.GetById;
     chai
@@ -283,11 +282,26 @@ describe("GetNoteById", () => {
         if (err) {
           console.log("plz check your credential");
           return done(err);
+        }
+        res.should.have.status(200);
+        return done();
+      });
+  });
+});
+describe("Update Note By Id", () => {
+  it.only("when call updateNoteById with validToken , should return appropriate response from controller", (done) => {
+    const token = noteInputs.notes.loginValidToken;
+    chai
+      .request(server)
+      .put("/updatenotes/:note_id")
+      .set({ authorization: token })
+      .end((err, res) => {
+        if (err) {
+          console.log("plz check your credential");
+          return done();
         }
         res.should.have.status(201);
         return done();
       });
   });
 });
-
-
