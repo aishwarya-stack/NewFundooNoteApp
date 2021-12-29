@@ -3,6 +3,7 @@ const chaiHttp = require("chai-http");
 const server = require("../server.js");
 chai.use(chaiHttp);
 chai.should();
+const faker = require("faker");
 const noteInputs = require("..//test/note.test.json");
 const userInput = require("..//test/user.test.json");
 const { createNote } = require("../app/controller/note.controller.js");
@@ -334,4 +335,24 @@ describe("Update Note By Id", () => {
         return done();
       });
   });
+  it.only("when call updateNoteById with valid input , should return appropriate response from controller", (done) => {
+      const token = noteInputs.notes.loginValidToken;
+      const id = noteInputs.notes.UpdateById;
+      const updateNote = {
+        title: faker.lorem.word(),
+        description: faker.lorem.sentence()
+      };
+      chai
+        .request(server)
+        .put(`/updatenotes/${id}`)
+        .set({ authorization: token })
+        .send(updateNote)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          res.should.have.status(201);
+          done();
+        });
+    });
 });
