@@ -319,4 +319,19 @@ describe("Update Note By Id", () => {
         return done();
       });
   });
+  it.only("when call updateNoteById with ValidToken , should return appropriate response from controller", (done) => {
+    const token = noteInputs.notes.loginValidToken;
+    chai
+      .request(server)
+      .put("/updatenotes/:note_id")
+      .set({ authorization: token })
+      .end((err, res) => {
+        if (err) {
+          console.log("plz check your credential");
+          return done();
+        }
+        res.should.have.status(201);
+        return done();
+      });
+  });
 });

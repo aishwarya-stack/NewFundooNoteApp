@@ -89,8 +89,23 @@ class noteController {
     }
     updateNoteById = (req, res) => {
       try {
+        const updateNote = {
+          note_id: req.params.note_id,
+          user_id: req.userData.user_id,
+          title: req.body.title,
+          description: req.body.description
+        };
+        const valid = validateNote.validate(req.body);
+        if (valid.error) {
+          logger.error("Invalid Note");
+          return res.status(400).send({
+            success: false,
+            message: "Please enter valid note"
+          });
+        }
         return res.status(201).json({
           message: "successfully note updated......",
+          message: "Getting Appropriate response from token",
           success: true
         });
       } catch (error) {
@@ -101,4 +116,5 @@ class noteController {
       }
     }
   }
+  
   module.exports = new noteController();
