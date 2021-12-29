@@ -375,4 +375,24 @@ describe("Update Note By Id", () => {
           done();
         });
     });
+    it.only("when call updateNoteById , should return appropriate response from model", (done) => {
+      const token = noteInputs.notes.loginValidToken;
+      const id = noteInputs.notes.UpdateById;
+      const updateNote = {
+        title: faker.lorem.word(),
+        description: faker.lorem.sentence()
+      };
+      chai
+        .request(server)
+        .put(`/updatenotes/${id}`)
+        .set({ authorization: token })
+        .send(updateNote)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          res.should.have.status(201);
+          done();
+        });
+    });
 });

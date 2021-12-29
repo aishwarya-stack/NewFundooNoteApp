@@ -37,5 +37,9 @@ class noteModel {
         return err;
       }
     }
+    updateNoteById = (updateNote, callback) => {
+      return callback(null, data);
+    }
   }
+  
     module.exports = new noteModel();

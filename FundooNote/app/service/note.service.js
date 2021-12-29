@@ -35,10 +35,17 @@ class Service {
       }
     }
     updateNoteById = (updateNote, callback) => {
-      return callback(null, data);
-    }
+      noteModel.updateNoteById(updateNote, (error, data) => {
+        if (error) {
+          logger.error(error);
+          return callback(error, null);
+        } else {
+          return callback(null, data);
+        }
+      }
+      )
   }
-   
+}  
     
   module.exports = new Service();
  
