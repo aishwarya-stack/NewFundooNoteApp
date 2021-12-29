@@ -26,7 +26,7 @@ class Helper {
         user_id: data.user_id,
         email:data.email
       };
-    return jwt.sign(dataForToken, process.env.ACCESS_TOKEN_KEY , { expiresIn: "24H" });
+    return jwt.sign(dataForToken, process.env.ACCESS_TOKEN_KEY , { expiresIn: "48H" });
     };
      /**
     * @description function compare random strings

@@ -38,7 +38,18 @@ class noteModel {
       }
     }
     updateNoteById = (updateNote, callback) => {
-      return callback(null, data);
+      try {
+        const values = [updatedNote.title,updatedNote.description,updatedNote.note_id];
+        pool.query(queries.updateNote,values,(err, data) => {
+          if (err) {
+            return callback(err, null);
+          } else {
+            return callback(null, data);
+          }
+        });
+      } catch (err) {
+        return callback(err, null);
+      }
     }
   }
   
