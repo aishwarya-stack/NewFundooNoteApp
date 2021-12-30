@@ -10,7 +10,7 @@ class UserDataController {
 	 * @returns
 	 */
 	create = (req, res) => {
-		console.log("inside controller", req.body);
+		//console.log("inside controller", req.body);
 		try {
 			const userData = {
 				firstName: req.body.firstName,
