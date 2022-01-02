@@ -56,9 +56,9 @@ class UserService {
 			  }
 	  });
 	}
-	resetPassword = (resetInfo, callback) => {
+	resetPassword = (user, callback) => {
 		console.log("inside service");
-		UserModel.resetPassword(resetInfo, (error, data) => {
+		UserModel.resetPassword(user, (error, data) => {
 		  if (data) {
 			return callback(null, data);
 		  } else {
